@@ -113,16 +113,9 @@ class ElevenLabsService(SpeechService):
 
         if voice_settings:
             if isinstance(voice_settings, dict):
-                if not voice_settings.get("stability") or not voice_settings.get(
-                    "similarity_boost"
-                ):
-                    raise KeyError(
-                        "Missing required keys: 'stability' and 'similarity_boost'. "
-                        "Required for setting voice setting"
-                    )
                 self.voice_settings = VoiceSettings(
-                    stability=voice_settings["stability"],
-                    similarity_boost=voice_settings["similarity_boost"],
+                    stability=voice_settings.get("stability", 1.0),
+                    similarity_boost=voice_settings.get("similarity_boost", 1.0),
                     style=voice_settings.get("style", 0),
                     speed=voice_settings.get("speed", 1.0),
                     use_speaker_boost=voice_settings.get("use_speaker_boost", True),
