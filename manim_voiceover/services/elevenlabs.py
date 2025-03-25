@@ -124,6 +124,7 @@ class ElevenLabsService(SpeechService):
                     stability=voice_settings["stability"],
                     similarity_boost=voice_settings["similarity_boost"],
                     style=voice_settings.get("style", 0),
+                    speed=voice_settings.get("speed", 1.0),
                     use_speaker_boost=voice_settings.get("use_speaker_boost", True),
                 )
             elif isinstance(voice_settings, VoiceSettings):
