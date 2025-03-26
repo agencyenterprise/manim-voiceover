@@ -162,17 +162,20 @@ class ElevenLabsService(SpeechService):
 
         try:
             # Use the new client-based API
-            audio = self.client.text_to_speech.convert(
-            text=input_text,
+            audio_generator = self.client.text_to_speech.convert(
+                text=input_text,
                 voice_id=self.voice_id,
                 model_id=self.model,
                 output_format=self.output_format,
                 voice_settings=self.voice_settings,
             )
             
+            # Convert generator to bytes
+            audio_bytes = b"".join(chunk for chunk in audio_generator)
+            
             # Save audio to file
             with open(str(Path(cache_dir) / audio_path), "wb") as f:
-                f.write(audio)
+                f.write(audio_bytes)
                 
         except Exception as e:
             logger.error(f"Error using ElevenLabs API: {e}")
